@@ -1,4 +1,5 @@
 .calendar  * {
+  line-height : 1;
     box-sizing: border-box;
     font-family: Tahoma;
     font-size: 14px;
