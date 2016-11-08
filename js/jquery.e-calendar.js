@@ -40,6 +40,14 @@
             var d = $(this).attr('data-event-day');
             $('div.c-event-item[data-event-day="' + d + '"]').addClass('c-event-over');
         };
+      var mouseClickEvent = function() {
+            var d = $(this).attr('data-event-day');
+        if (typeof(settings.eventClicked)=='function') {
+          debugger;
+          $('div.c-event-item[data-event-day="' + d + '"]').trigger("click");
+          }
+
+        }
         var mouseLeaveEvent = function () {
             $(this).removeClass('c-event-over')
             var d = $(this).attr('data-event-day');
@@ -139,6 +147,8 @@
                         if (d.getDate() == day && d.getMonth() == dMonth && d.getFullYear() == dYear) {
                             cDay.addClass('c-event').attr('data-event-day', d.getDate());
                             cDay.on('mouseover', mouseOverEvent).on('mouseleave', mouseLeaveEvent);
+                          cDay.on("click",mouseClickEvent);
+
                         }
                     }
                     cDay.html(day++);
@@ -154,7 +164,19 @@
                 if (d.getMonth() == dMonth && d.getFullYear() == dYear) {
                     var date = lpad(d.getDate(), 2) + '/' + lpad(d.getMonth() + 1, 2) + ' ' + lpad(d.getHours(), 2) + ':' + lpad(d.getMinutes(), 2);
                     var item = $('<div/>').addClass('c-event-item');
-                    var title = $('<div/>').addClass('title').html(date + '  ' + settings.events[i].title + '<br/>');
+                  if (typeof(settings.eventClicked)=='function') {
+                    (function(item,calevt) {
+                      $(item).on("click",function(evt) {
+                        settings.eventClicked(calevt,evt);
+                      });
+                    })(item,settings.events[i]);
+                  }
+                  var eventTitle = "";
+                  if (settings.eventDisplayDateOnEventList) {
+                    eventTitle += date + '  ';
+                  }
+                   eventTitle += settings.events[i].title + '<br/>';
+                    var title = $('<div/>').addClass('title').html(eventTitle);
                     var description = $('<div/>').addClass('description').html(settings.events[i].description + '<br/>');
                     item.attr('data-event-day', d.getDate());
                     item.on('mouseover', mouseOverItem).on('mouseleave', mouseLeaveItem);
@@ -196,6 +218,7 @@
         months: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
         textArrows: {previous: '<', next: '>'},
         eventTitle: 'Eventos',
+      eventDisplayDateOnEventList : true,
         url: '',
         events: [
             {title: 'Evento de Abertura', description: 'Abertura das Olimpíadas Rio 2016', datetime: new Date(2016, new Date().getMonth(), 12, 17)},
