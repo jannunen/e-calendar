@@ -26,8 +26,10 @@ One can add event listener if you want to catch clicks on given events.
 ```Javascript
 var options = {
 eventClicked : function(eventObject,originalEvent) {
+  }
 }
-}
+```
+
 ####Event Object Properties
 ```JavaScript
 title: Event title, displayed in bold
