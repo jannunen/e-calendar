@@ -13,6 +13,7 @@ months: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho',
          'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
 textArrows: {previous: '<', next: '>'},
 eventTitle: 'Eventos',
+eventDisplayDateOnEventList : true,
 url: '',
 events: [
     {title: 'Event Title 1', description: 'Description 1', datetime: new Date(2016, 0, 12, 17)},
@@ -20,6 +21,13 @@ events: [
 ],
 firstDayOfWeek: 0
 ```
+####Event listeners
+One can add event listener if you want to catch clicks on given events.
+```Javascript
+var options = {
+eventClicked : function(eventObject,originalEvent) {
+}
+}
 ####Event Object Properties
 ```JavaScript
 title: Event title, displayed in bold
